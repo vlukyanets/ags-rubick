@@ -1,0 +1,19 @@
+@use "colors" as c;
+
+window.Bar {
+  background: transparent;
+  color: c.$fg;
+  font-weight: bold;
+
+  > centerbox {
+    background: c.$bg;
+    border-radius: 10px;
+    margin: 8px;
+    padding: 0 4px;
+  }
+
+  button {
+    border-radius: 8px;
+    margin: 2px;
+  }
+}
