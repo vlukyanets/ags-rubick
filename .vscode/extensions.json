@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "yoavbls.pretty-ts-errors",
+    "bierner.markdown-mermaid"
+  ]
+}

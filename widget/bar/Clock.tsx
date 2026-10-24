@@ -7,7 +7,11 @@ type ClockProps = {
 }
 
 export default function Clock({ format = "%H:%M" }: ClockProps) {
-  const time = createPoll("", 1000, () => GLib.DateTime.new_now_local().format(format)!)
+  const time = createPoll(
+    "",
+    1000,
+    () => GLib.DateTime.new_now_local().format(format)!,
+  )
 
   return (
     <menubutton class="Clock">
