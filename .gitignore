@@ -1,2 +1,4 @@
 node_modules/
 @girs/
+.claude/settings.local.json
+.claude/worktrees/
