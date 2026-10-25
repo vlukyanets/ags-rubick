@@ -22,8 +22,8 @@ then harden it. Working code beats documents.
 
 - `ags types -u -d .`: generate `@girs/` and link `node_modules/` after
   a fresh checkout or an AGS update.
-- `ags bundle app.tsx "$XDG_RUNTIME_DIR/rubick-check.js"`: builds the
-  code and the styles. Run it before saying a change works.
+- `scripts/check.sh`: type check of our files, then a build of the code
+  and the styles. Run it before saying a change works.
 - `ags run app.tsx`, then `ags quit -i rubick`: try it by hand. It puts a
   real bar on the owner's screens; `niri msg --json layers` lists it.
 
@@ -34,7 +34,7 @@ then harden it. Working code beats documents.
   `docs/`.
 - Use library defaults. Add a setting, constant or timeout only when
   something breaks without it.
-- Done means the bundle built and the change was tried with `ags run`.
+- Done means `scripts/check.sh` passed and `ags run` showed the change.
   If a check failed or could not run, say so and show its output.
 - Keep changes small: one topic per branch.
 - Read and change files with the file tools (Read, Edit, Write), not

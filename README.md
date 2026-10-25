@@ -9,11 +9,13 @@ JSX.
 - `aylurs-gtk-shell-git`: AGS v3, brings `gjs` and `libastal`.
 - `gtk4-layer-shell`.
 - `dart-sass`: AGS compiles `.scss` with the `sass` binary.
+- `typescript`: `tsc` for `scripts/check.sh`.
 
 ## Development
 
 ```sh
 ags types -u -d .        # generate @girs/ and link node_modules/
+scripts/check.sh         # type check and build
 ags run app.tsx          # start the shell, instance "rubick"
 ags inspect -i rubick    # open the GTK inspector
 ags quit -i rubick
