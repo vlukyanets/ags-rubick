@@ -3,6 +3,8 @@
     "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
     "yoavbls.pretty-ts-errors",
+    "usernamehw.errorlens",
+    "SomewhatStationery.some-sass",
     "bierner.markdown-mermaid"
   ]
 }
