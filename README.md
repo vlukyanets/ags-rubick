@@ -23,8 +23,4 @@ ags quit -i rubick
 
 `@girs/` and `node_modules/` are generated and not in git.
 
-For VS Code, `scripts/vscode-profile.sh` installs the extensions from
-`.vscode/extensions.json` into a profile of its own, `ags-rubick`, and
-opens the repository with it.
-
 How the code is laid out and why: `docs/architecture.md`.
