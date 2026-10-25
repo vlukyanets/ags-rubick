@@ -5,6 +5,26 @@ fit together. It describes the prototype; most of it is not built yet.
 
 Draft: the owner has not approved it yet.
 
+## Scope
+
+The shell is to replace noctalia, the shell the owner runs now. The
+parts, in the order they are built:
+
+1. a launcher for apps, opened with `ags toggle`;
+2. the niri service, with workspaces and the keyboard layout on the bar;
+3. a control center: sound, Wi-Fi, Bluetooth;
+4. an OSD for volume and brightness;
+5. a power menu: power off, reboot, suspend, log out;
+6. notifications: popups and a history;
+7. the wallpaper;
+8. the lock screen;
+9. a clipboard history.
+
+The launcher comes first: it does not need niri and is of use right
+away, next to noctalia. Notifications and the wallpaper come late,
+because noctalia has to stop for them: it owns the notification name on
+D-Bus and draws its own wallpaper.
+
 ## Bird's eye view
 
 ```mermaid
@@ -66,6 +86,32 @@ the socket in `$NIRI_SOCKET`. The protocol is one JSON value per line.
   is small and stable; a service of our own needs no extra package and
   no extra process, and niri pushes changes so nothing polls.
 - **The clock reads `GLib.DateTime`.** No `date` process every second.
+- **Astal libraries for the parts of the scope.** `libastal-apps` for the
+  launcher, `libastal-notifd` for notifications, `libastal-wireplumber`
+  for sound, `libastal-network` and `libastal-bluetooth` for the control
+  center. Brightness comes from sysfs, and the power menu goes through
+  logind and the `Quit` action of the niri service, with no library.
+- **The keyboard layout comes from the niri service.** niri sends the
+  layouts in its event stream and switches them with an action.
+- **The wallpaper is a window of the shell.** A layer-shell window on the
+  background layer of each monitor, with a `Gtk.Picture`; no extra
+  program.
+- **The lock screen is part of the shell.** `Gtk4SessionLock` from
+  `gtk4-layer-shell` locks the session over `ext-session-lock-v1`, and
+  `libastal-auth` checks the password with PAM. If the shell dies while
+  locked, the session stays locked until it runs again: the protocol
+  never unlocks on a crash.
+- **Clipboard history with `cliphist` and `wl-clipboard`.** GTK sees the
+  clipboard only while a shell window has focus, so `wl-paste --watch
+  cliphist store` keeps the history on disk; the shell lists it with
+  `cliphist list` and copies an entry back with `cliphist decode` and
+  `wl-copy`.
+- **Notifications need noctalia gone.** Only one process can own the
+  notification name on D-Bus, and noctalia holds it while it runs.
+- **Type check with `tsc` from the system package.** `typescript` comes
+  from pacman, like AGS itself; an npm package would make `npm install`
+  replace the links AGS puts in `node_modules/`. The AGS library sources
+  fail `tsc`, so `scripts/check.sh` counts only errors in our files.
 - **Library defaults first.** A setting is added only when a default
   breaks something.
 
@@ -73,8 +119,4 @@ the socket in `$NIRI_SOCKET`. The protocol is one JSON value per line.
 
 Proposals the owner has not decided yet:
 
-- A type check: `tsc --noEmit` needs `typescript`, which is not
-  installed. The library sources that AGS ships fail it, so the check
-  would look at our files only.
-- What the shell has beyond the bar: a launcher, notifications, an OSD,
-  a power menu.
+- None for now.
